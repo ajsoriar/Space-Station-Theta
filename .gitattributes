@@ -1,5 +1,7 @@
 ## Unity ##
 
+# Git LFS configuration file thanks to: https://gist.github.com/Srfigie/77b5c15bc5eb61733a74d34d10b3ed87
+
 *.cs diff=csharp text
 *.cginc text
 *.shader text
