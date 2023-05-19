@@ -11,6 +11,7 @@ using UnityEngine;
 public class HandMovement : MonoBehaviour
 {
     public Rigidbody rb;
+    private GameObject grandparentObject;
     private bool isMoving = false;
     public float amplitude = 0.1f;  // Amplitude of the sine wave
     public float frequency = 1f;   // Frequency of the sine wave
@@ -22,18 +23,36 @@ public class HandMovement : MonoBehaviour
     {
         // Store the initial position of the hand
         initialPosition = transform.localPosition;
+        //PlayerObject = 
+
+
+        // Get the parent GameObject
+        GameObject parentObject = transform.parent.gameObject;
+
+        // Get the parent of the parent GameObject
+        GameObject grandparentObject = parentObject.transform.parent.gameObject;
+
+        // Print the name of the grandparent GameObject
+        //Debug.Log("Grandparent Object: " + grandparentObject.name);
+        //Script parentScript = grandparentObject.GetComponent<ParentScript>();
     }
 
     void Update()
     {
+        /*
+        float velocityMagnitude = rb.velocity.magnitude;
+        string velocityString = velocityMagnitude.ToString("F2");
+        UpdateTextMesh("HolaText2", "Is moving! velocity: " + velocityString);
+
         if (rb.velocity.magnitude > 0 && !isMoving)
         {
             isMoving = true;
-            // Call your function here
+            //UpdateTextMesh("HolaText2", "Is moving!" + velocityString);
         }
         else if (rb.velocity.magnitude == 0 && isMoving)
         {
             isMoving = false;
+            //UpdateTextMesh("HolaText2", "Is not moving.");
         }
 
         if (isMoving) {
@@ -44,7 +63,42 @@ public class HandMovement : MonoBehaviour
             // Update the position of the hand
             transform.localPosition = newPosition;
         }
+        */
+
+        //if (grandparentObject.isMoving)
+        //{
+        //    // Calculate the new position of the hand based on the sine wave
+        //    float yOffset = amplitude * Mathf.Sin(2 * Mathf.PI * frequency * Time.time + offset);
+        //    Vector3 newPosition = initialPosition + Vector3.up * yOffset;
+
+        //    // Update the position of the hand
+        //    transform.localPosition = newPosition;
+        //}
+
     }
+
+    // move to utils library?
+    public void UpdateTextMesh(string textMeshName, string newText) // Thanks ChatGPT
+    {
+        GameObject gameObjectWithTextMesh = GameObject.Find(textMeshName);
+        if (gameObjectWithTextMesh != null)
+        {
+            TextMesh textMeshComponent = gameObjectWithTextMesh.GetComponentInChildren<TextMesh>();
+            if (textMeshComponent != null)
+            {
+                textMeshComponent.text = newText;
+            }
+            else
+            {
+                Debug.LogError("No TextMesh component found on game object: " + textMeshName);
+            }
+        }
+        else
+        {
+            Debug.LogError("Could not find game object: " + textMeshName);
+        }
+    }
+
 }
 
 /*

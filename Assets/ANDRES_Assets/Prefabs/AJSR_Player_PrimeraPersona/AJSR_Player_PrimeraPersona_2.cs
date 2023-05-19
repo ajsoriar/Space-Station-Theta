@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.XR;
+//using AndresHelpers;
 
 public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     public GameObject A; // = GameObject.Find("mano-pistola_v2");
     public GameObject B; // = GameObject.Find("mano-pointer");
     public GameObject C; // = GameObject.Find("mano-press2");
+    public bool isMoving = false;
 
 
     // Start is called before the first frame update
@@ -80,6 +82,14 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             StartCoroutine(moveHandForward(HandGroup, -0.5f));
             Disparo();
         }
+
+        /*
+        float velocityMagnitude = rb.velocity.magnitude;
+        string velocityString = velocityMagnitude.ToString("F2");
+        */
+
+
+
     }
 
     public IEnumerator moveHandForward(GameObject hand, float distanceToMove = 0.5f)
@@ -104,6 +114,17 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     {
         SetMoveAndRotationByPhysics();
         CamRaycast();
+
+        UpdateTextMesh("HolaText2", "Is moving! velocity, x:" + moveVector.x + ", z:" + moveVector.z);
+
+        if (moveVector.x == 0f && moveVector.z == 0f)
+        {
+            isMoving = false;
+        }
+        else if (rb.velocity.magnitude == 0 && isMoving)
+        {
+            isMoving = true;
+        }
     }
 
     void SetVectors()
@@ -183,11 +204,13 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             clearTarget();
         }
 
+        //AndresHelpers.
         UpdateTextMesh("txtDistanceInfo", hit.distance.ToString());
     }
 
     public void clearTarget()
     {
+        //AndresHelpers.
         UpdateTextMesh("txtMessage", "");
         targetHitObject = default;
         EnableHand(0);
@@ -196,13 +219,12 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     public void setTarget(RaycastHit hit)
     {
         targetHitObject = hit;
+        //AndresHelpers.
         UpdateTextMesh("txtMessage", targetHitObject.collider.gameObject.name);
         EnableHand(1);
     }
     public void EnableHand(int index)
     {
-
-
         if (index < 0 || index >= 3)
         {
             Debug.LogWarning("Invalid index: " + index);
@@ -224,6 +246,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         }
     }
 
+    // move to utils library?
     public void UpdateTextMesh(string textMeshName, string newText) // Thanks ChatGPT
     {
         GameObject gameObjectWithTextMesh = GameObject.Find(textMeshName);
