@@ -37,7 +37,8 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     public GameObject A; // = GameObject.Find("mano-pistola_v2");
     public GameObject B; // = GameObject.Find("mano-pointer");
     public GameObject C; // = GameObject.Find("mano-press2");
-    public bool isMoving = false;
+    public int playerIsMoving = 0;
+
 
 
     // Start is called before the first frame update
@@ -81,51 +82,40 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         {
             StartCoroutine(moveHandForward(HandGroup, -0.5f));
             Disparo();
+            SoundManager.THIS.PlaySound_ShotWeapon();
         }
 
         /*
         float velocityMagnitude = rb.velocity.magnitude;
         string velocityString = velocityMagnitude.ToString("F2");
         */
-
-
-
     }
 
-    public IEnumerator moveHandForward(GameObject hand, float distanceToMove = 0.5f)
-    {
-        float moveDuration = 1f;
 
-        Vector3 startPosition = hand.transform.position;
-        Vector3 endPosition = hand.transform.position + hand.transform.forward * distanceToMove;
-
-        float currentTime = 0f;
-        while (currentTime < moveDuration)
-        {
-            currentTime += Time.deltaTime;
-            float t = Mathf.Clamp01(currentTime / moveDuration);
-            hand.transform.position = Vector3.Lerp(endPosition, startPosition, t);
-            yield return null;
-        }
-        hand.transform.position = startPosition;
-    }
 
     private void FixedUpdate()
     {
         SetMoveAndRotationByPhysics();
         CamRaycast();
 
-        UpdateTextMesh("HolaText2", "Is moving! velocity, x:" + moveVector.x + ", z:" + moveVector.z);
+        UpdateTextMesh("HolaText2", "Is the player moving? \n" +
+            "velocity, x:" + moveVector.x + ", z:" + moveVector.z +"\n" +
+            "(moveVector.x != 0f) -> " + (moveVector.x != 0f) + "\n" +
+            "(moveVector.z != 0f) -> " + (moveVector.z != 0f) + "\n" +
+            "isMoving: " + playerIsMoving
+            );
 
-        if (moveVector.x == 0f && moveVector.z == 0f)
+        if (moveVector.x != 0f && moveVector.z != 0f)
         {
-            isMoving = false;
+            playerIsMoving = 1;
         }
-        else if (rb.velocity.magnitude == 0 && isMoving)
+        else //if (rb.velocity.magnitude == 0 && playerIsMoving )
         {
-            isMoving = true;
+            playerIsMoving = 0;
         }
     }
+
+
 
     void SetVectors()
     {
@@ -149,6 +139,53 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         rb.MovePosition(rb.position + moveVector * speedMov * Time.fixedDeltaTime);
         Quaternion deltaRotation = Quaternion.Euler(Vector3.up * horizontalAngles * Time.fixedDeltaTime);
         rb.MoveRotation(deltaRotation);
+    }
+
+
+
+
+
+    // playerInRadioactiveArea
+    // playerInLava
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("RadioactiveArea"))
+        {
+            //playerInRadioactiveArea = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("RadioactiveArea"))
+        {
+            //playerInRadioactiveArea = false;
+            //playerInRadioactiveAreaTimer = 0f;
+        }
+    }
+
+
+
+
+
+
+    public IEnumerator moveHandForward(GameObject hand, float distanceToMove = 0.5f)
+    {
+        float moveDuration = 1f;
+
+        Vector3 startPosition = hand.transform.position;
+        Vector3 endPosition = hand.transform.position + hand.transform.forward * distanceToMove;
+
+        float currentTime = 0f;
+        while (currentTime < moveDuration)
+        {
+            currentTime += Time.deltaTime;
+            float t = Mathf.Clamp01(currentTime / moveDuration);
+            hand.transform.position = Vector3.Lerp(endPosition, startPosition, t);
+            yield return null;
+        }
+        hand.transform.position = startPosition;
     }
 
     //void Disparo()

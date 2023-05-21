@@ -214,6 +214,7 @@ MonoBehaviour:
   A: {fileID: 7527230590479744545}
   B: {fileID: 7527230589647061985}
   C: {fileID: 7527230590389351159}
+  playerIsMoving: 0
 --- !u!1 &3272970599195833672
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,6 +894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3272970598545215756}
+  player: {fileID: 0}
   amplitude: 0.1
   frequency: 1
   offset: 0

@@ -11,7 +11,8 @@ using UnityEngine;
 public class HandMovement : MonoBehaviour
 {
     public Rigidbody rb;
-    private GameObject grandparentObject;
+    //public Rigidbody playerRb;
+    public GameObject player;
     private bool isMoving = false;
     public float amplitude = 0.1f;  // Amplitude of the sine wave
     public float frequency = 1f;   // Frequency of the sine wave
@@ -19,19 +20,19 @@ public class HandMovement : MonoBehaviour
 
     private Vector3 initialPosition;    // Initial position of the hand
 
+
+    //private PlayerMovement playerMovement;
+
     void Start()
     {
         // Store the initial position of the hand
         initialPosition = transform.localPosition;
         //PlayerObject = 
-
-
+        //playerRb = GetComponent<Rigidbody>();
         // Get the parent GameObject
-        GameObject parentObject = transform.parent.gameObject;
-
+        //GameObject parentObject = transform.parent.gameObject;
         // Get the parent of the parent GameObject
-        GameObject grandparentObject = parentObject.transform.parent.gameObject;
-
+        //GameObject grandparentObject = parentObject.transform.parent.gameObject;
         // Print the name of the grandparent GameObject
         //Debug.Log("Grandparent Object: " + grandparentObject.name);
         //Script parentScript = grandparentObject.GetComponent<ParentScript>();
@@ -65,18 +66,22 @@ public class HandMovement : MonoBehaviour
         }
         */
 
-        //if (grandparentObject.isMoving)
-        //{
-        //    // Calculate the new position of the hand based on the sine wave
-        //    float yOffset = amplitude * Mathf.Sin(2 * Mathf.PI * frequency * Time.time + offset);
-        //    Vector3 newPosition = initialPosition + Vector3.up * yOffset;
+        //bool isMoving = player.gameObject.active; // GetBool("puertaAbierta");  //playerIsMoving;
 
-        //    // Update the position of the hand
-        //    transform.localPosition = newPosition;
-        //}
+        if (isMoving)
+        {
+            // Calculate the new position of the hand based on the sine wave
+            float yOffset = amplitude * Mathf.Sin(2 * Mathf.PI * frequency * Time.time + offset);
+            Vector3 newPosition = initialPosition + Vector3.up * yOffset;
+
+            // Update the position of the hand
+            transform.localPosition = newPosition;
+        }
 
     }
 
+    /*
+   
     // move to utils library?
     public void UpdateTextMesh(string textMeshName, string newText) // Thanks ChatGPT
     {
@@ -99,6 +104,7 @@ public class HandMovement : MonoBehaviour
         }
     }
 
+    */
 }
 
 /*

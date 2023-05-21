@@ -4,8 +4,6 @@ using static UnityEditor.Experimental.GraphView.Port;
 
 public class RotateForever : MonoBehaviour
 {
-
-
     float speed = -200f;
 
     private void Update()
