@@ -10,6 +10,8 @@ using UnityEngine.XR;
 
 public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
 {
+    public static AJSR_Player_PrimeraPersona_2 THIS;
+
     public float rayLength;
     RaycastHit targetHitObject;
 
@@ -37,11 +39,11 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     public GameObject A; // = GameObject.Find("mano-pistola_v2");
     public GameObject B; // = GameObject.Find("mano-pointer");
     public GameObject C; // = GameObject.Find("mano-press2");
-    public int playerIsMoving = 0;
-
-
-
-    // Start is called before the first frame update
+    public bool playerIsMoving = false;
+    private void Awake()
+    {
+        THIS = this;
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -91,31 +93,49 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         */
     }
 
-
-
     private void FixedUpdate()
     {
         SetMoveAndRotationByPhysics();
         CamRaycast();
 
-        UpdateTextMesh("HolaText2", "Is the player moving? \n" +
-            "velocity, x:" + moveVector.x + ", z:" + moveVector.z +"\n" +
-            "(moveVector.x != 0f) -> " + (moveVector.x != 0f) + "\n" +
-            "(moveVector.z != 0f) -> " + (moveVector.z != 0f) + "\n" +
-            "isMoving: " + playerIsMoving
-            );
+        UpdateTextMesh("HolaText2",
+            "isMoving: " + playerIsMoving + "\n" + "velocity, x:" + moveVector.x + ", z:" + moveVector.z +"\n" +
+            "Coins: "+ GameManager.THIS.playerData.coinsCounter +"\n" +
+            "Keys: " + GameManager.THIS.playerData.keysCounter +"\n" +
+            "oxigen: " + GameManager.THIS.playerData.oxigen + "\n" +
+            "damage: " + GameManager.THIS.playerData.damage + "\n" +
+            "currentWeapon: " + GameManager.THIS.playerData.currentWeapon + "\n" +
+            "bulletsCounter: " + GameManager.THIS.playerData.bulletsCounter + "\n" +
+            "weaponTemperature: " + GameManager.THIS.playerData.weaponTemperature + "\n" +
+            "."
+        );
 
-        if (moveVector.x != 0f && moveVector.z != 0f)
-        {
-            playerIsMoving = 1;
-        }
-        else //if (rb.velocity.magnitude == 0 && playerIsMoving )
-        {
-            playerIsMoving = 0;
+    //public float oxigen;
+    //public float oxigenMax;
+    //public float damage;
+    //public float damageMax;
+
+    //// Weapons
+    //public int currentWeapon; // 0 Hands, 1 Basic, 2 Bazooka, 3 LoveYou!
+    //public int bulletsCounter;
+    //public float weaponTemperature;
+    //public float weaponTemperatureMax;
+
+    //// Skils
+    //public bool fastRunUnlocked;
+    //public bool jumpUnlocked;
+    //public bool energyShieldUnlocked;
+
+    //// Items
+    //public int coinsCounter;
+    //public int keysCounter;
+
+        if (moveVector.x != 0f && moveVector.z != 0f) {
+            playerIsMoving = true;
+        } else {
+            playerIsMoving = false;
         }
     }
-
-
 
     void SetVectors()
     {

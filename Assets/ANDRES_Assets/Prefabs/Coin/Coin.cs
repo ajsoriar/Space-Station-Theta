@@ -18,7 +18,11 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        SoundManager.THIS.PlaySound_GetCoin();
-        gameObject.SetActive(false);
+        if (other.CompareTag("Player")) { 
+            SoundManager.THIS.PlaySound_GetCoin();
+            gameObject.SetActive(false);
+            GameManager.THIS.playerData.coinsCounter += 1;
+        }
     }
+
 }
