@@ -102,7 +102,9 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             "isMoving: " + playerIsMoving + "\n" + "velocity, x:" + moveVector.x + ", z:" + moveVector.z +"\n" +
             "Coins: "+ GameManager.THIS.playerData.coinsCounter +"\n" +
             "Keys: " + GameManager.THIS.playerData.keysCounter +"\n" +
-            "oxigen: " + GameManager.THIS.playerData.oxigen + "\n" +
+            "oxigenBotleCount: " + GameManager.THIS.playerData.oxygenBotleCount + "\n" +
+            "oxigen: " + GameManager.THIS.playerData.oxygen + "\n" +
+            "healthCaseCount: " + GameManager.THIS.playerData.healthCaseCount + "\n" +
             "damage: " + GameManager.THIS.playerData.damage + "\n" +
             "currentWeapon: " + GameManager.THIS.playerData.currentWeapon + "\n" +
             "bulletsCounter: " + GameManager.THIS.playerData.bulletsCounter + "\n" +

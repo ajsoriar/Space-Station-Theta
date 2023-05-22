@@ -13,16 +13,20 @@ using System;
 public class PlayerData
 {
     // Basic
-    public float oxigen;
-    public float oxigenMax;
+    public float oxygenBotleCount;
+    public float oxygen;
+    public float oxygenMax; // 100
+    
+    // Health
+    public float healthCaseCount;
     public float damage;
-    public float damageMax;
+    public float damageMax; //100
 
     // Weapons
     public int currentWeapon; // 0 Hands, 1 Basic, 2 Bazooka, 3 LoveYou!
     public int bulletsCounter;
     public float weaponTemperature;
-    public float weaponTemperatureMax;
+    public float weaponTemperatureMax; // 100
 
     // Skils
     public bool fastRunUnlocked;
