@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.XR;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 //using AndresHelpers;
 
 public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
@@ -33,13 +34,19 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     float horizontalAngles;
     float verticalAnglesAngles;
 
+    // Hands
     public Rigidbody balaOriginal;
-
     public GameObject HandGroup;
     public GameObject A; // = GameObject.Find("mano-pistola_v2");
     public GameObject B; // = GameObject.Find("mano-pointer");
     public GameObject C; // = GameObject.Find("mano-press2");
+
+    // Moving
     public bool playerIsMoving = false;
+    private float counter = 0;
+    private float counterTimer = 0;
+    private int stepSound = -1; // Two different sounds for every foot. (-1 left and 1 right, stereo!)  
+
     private void Awake()
     {
         THIS = this;
@@ -112,35 +119,66 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             "."
         );
 
-    //public float oxigen;
-    //public float oxigenMax;
-    //public float damage;
-    //public float damageMax;
+        //public float oxigen;
+        //public float oxigenMax;
+        //public float damage;
+        //public float damageMax;
 
-    //// Weapons
-    //public int currentWeapon; // 0 Hands, 1 Basic, 2 Bazooka, 3 LoveYou!
-    //public int bulletsCounter;
-    //public float weaponTemperature;
-    //public float weaponTemperatureMax;
+        //// Weapons
+        //public int currentWeapon; // 0 Hands, 1 Basic, 2 Bazooka, 3 LoveYou!
+        //public int bulletsCounter;
+        //public float weaponTemperature;
+        //public float weaponTemperatureMax;
 
-    //// Skils
-    //public bool fastRunUnlocked;
-    //public bool jumpUnlocked;
-    //public bool energyShieldUnlocked;
+        //// Skils
+        //public bool fastRunUnlocked;
+        //public bool jumpUnlocked;
+        //public bool energyShieldUnlocked;
 
-    //// Items
-    //public int coinsCounter;
-    //public int keysCounter;
+        //// Items
+        //public int coinsCounter;
+        //public int keysCounter;
 
         if (moveVector.x != 0f && moveVector.z != 0f) {
             playerIsMoving = true;
         } else {
             playerIsMoving = false;
         }
+
+        if (playerIsMoving)
+        {
+            counterTimer += Time.deltaTime;
+            if (counterTimer >= 0.5f) // Increase counter every 0.5 seconds
+            {
+                counter++;
+                counterTimer = 0f;
+                walkSound();
+                decreaseOxigenOpeStep();
+            }
+        }
+        else
+        {
+            // Reset the counter and timer if the player is not moving
+            counter = 0;
+            counterTimer = 0f;
+        }
     }
 
-    void SetVectors()
-    {
+    void walkSound() {
+        if (stepSound == 1){
+            SoundManager.THIS.PlaySound_FootRight();
+        } else { // -1
+            SoundManager.THIS.PlaySound_FootLeft();
+        }
+    }
+
+    public void decreaseOxigenOpeStep() {
+        Debug.Log("[Steps] decreaseOxigenOpeStep()");
+        GameManager.THIS.playerData.oxygen -= 1;
+        PercentageBar.THIS.refreshBar();
+    }
+
+    void SetVectors() {
         inputVector.x = Input.GetAxisRaw("Horizontal");
         inputVector.z = Input.GetAxisRaw("Vertical");
         moveVector = inputVector.x * cam.right + inputVector.z * cam.forward;
@@ -148,24 +186,18 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         moveVector = moveVector.normalized;
     }
 
-    void SetRotationAngles()
-    {
+    void SetRotationAngles() {
         verticalAnglesAngles -= Input.GetAxis("Mouse Y") * speedRot * Time.deltaTime;
         verticalAnglesAngles = Mathf.Clamp(verticalAnglesAngles, -limitAngles, limitAngles);
         cam.localRotation = Quaternion.Euler(Vector3.right * verticalAnglesAngles);
         horizontalAngles += Input.GetAxis("Mouse X") * speedRot;
     }
 
-    void SetMoveAndRotationByPhysics()
-    {
+    void SetMoveAndRotationByPhysics() {
         rb.MovePosition(rb.position + moveVector * speedMov * Time.fixedDeltaTime);
         Quaternion deltaRotation = Quaternion.Euler(Vector3.up * horizontalAngles * Time.fixedDeltaTime);
         rb.MoveRotation(deltaRotation);
     }
-
-
-
-
 
     // playerInRadioactiveArea
     // playerInLava
@@ -326,5 +358,9 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             Debug.LogError("Could not find game object: " + textMeshName);
         }
     }
+
+
+
+
 
 }

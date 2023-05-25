@@ -33,6 +33,16 @@ public class SoundManager : MonoBehaviour
     public void PlaySound_ShotWeapon() {
         audio_scr.PlayOneShot(sound_weapon_main);
     }
+ 
+    public void PlaySound_FootRight()
+    {
+        audio_scr.PlayOneShot(sound_getCoin);
+    }
+
+    public void PlaySound_FootLeft()
+    {
+        audio_scr.PlayOneShot(sound_weapon_main);
+    }
 }
 
 /*

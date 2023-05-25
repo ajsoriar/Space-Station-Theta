@@ -12,10 +12,10 @@ using System;
 
 public class PlayerData
 {
-    // Basic
-    public float oxygenBotleCount;
-    public float oxygen;
-    public float oxygenMax; // 100
+    // Oxigen
+    public int oxygenBotleCount;
+    public int oxygen;
+    public int oxygenMax; // 100
     
     // Health
     public float healthCaseCount;

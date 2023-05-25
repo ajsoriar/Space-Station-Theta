@@ -6,16 +6,16 @@ using UnityEngine.UIElements;
 public class Oxygen : MonoBehaviour
 {
 
-    public int oxygenLever = 50;
+    public int oxygenLevel = 50;
 
     void Start() {
-        if (oxygenLever > 100){
-            oxygenLever = 100;
-        }else if (oxygenLever < 0) {
-            oxygenLever = 0;
+        if (oxygenLevel > 100){
+            oxygenLevel = 100;
+        }else if (oxygenLevel < 0) {
+            oxygenLevel = 0;
         }
 
-        SetOxygenLevel(oxygenLever);
+        SetOxygenLevel(oxygenLevel);
     }
 
     void Update() {
@@ -30,7 +30,19 @@ public class Oxygen : MonoBehaviour
             GameManager.THIS.playerData.oxygenBotleCount += 1;
 
             // Calculate and update the oxygen bar
+            increasePlayerOxigen(oxygenLevel);
         }
+    }
+
+    public void increasePlayerOxigen(int oxygenToAdd)
+    {
+        Debug.Log("[Steps|Bar] increasePlayerOxigen() oxygenToAdd: "+ oxygenToAdd);
+        if (GameManager.THIS.playerData.oxygen + oxygenToAdd > 100) {
+            GameManager.THIS.playerData.oxygen = 100;
+        } else {
+            GameManager.THIS.playerData.oxygen += oxygenToAdd;
+        }
+        PercentageBar.THIS.refreshBar();
     }
 
     // Right from ChatGPT, LOL!
@@ -52,7 +64,6 @@ public class Oxygen : MonoBehaviour
     public void SetOxygenLevel(int oxygenValue)
     {
         GameObject O2 = transform.Find("OxygenMeter").gameObject;
-
         Vector3 scale = O2.transform.localScale;
         scale.z = oxygenValue;
         O2.transform.localScale = scale;
