@@ -53,7 +53,6 @@ public class Oxygen : MonoBehaviour
     public void SetOxygenLevel(int oxygenValue) 
     {
         GameObject O2 = GameObject.Find("OxygenMeter");
-
         Vector3 scale = O2.transform.localScale;
         scale.z = oxygenValue;
         O2.transform.localScale = scale;
