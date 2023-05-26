@@ -116,28 +116,10 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             "currentWeapon: " + GameManager.THIS.playerData.currentWeapon + "\n" +
             "bulletsCounter: " + GameManager.THIS.playerData.bulletsCounter + "\n" +
             "weaponTemperature: " + GameManager.THIS.playerData.weaponTemperature + "\n" +
+            "totalEnemies: " + GameManager.THIS.playerData.totalEnemies + "\n" +
+            "enemiesNearMe: " + GameManager.THIS.playerData.enemiesNearMe + "\n" + 
             "."
         );
-
-        //public float oxigen;
-        //public float oxigenMax;
-        //public float damage;
-        //public float damageMax;
-
-        //// Weapons
-        //public int currentWeapon; // 0 Hands, 1 Basic, 2 Bazooka, 3 LoveYou!
-        //public int bulletsCounter;
-        //public float weaponTemperature;
-        //public float weaponTemperatureMax;
-
-        //// Skils
-        //public bool fastRunUnlocked;
-        //public bool jumpUnlocked;
-        //public bool energyShieldUnlocked;
-
-        //// Items
-        //public int coinsCounter;
-        //public int keysCounter;
 
         if (moveVector.x != 0f && moveVector.z != 0f) {
             playerIsMoving = true;

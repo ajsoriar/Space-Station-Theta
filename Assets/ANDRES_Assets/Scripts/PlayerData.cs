@@ -36,4 +36,8 @@ public class PlayerData
     // Items
     public int coinsCounter;
     public int keysCounter;
+
+    //Other
+    public int totalEnemies;
+    public int enemiesNearMe;
 }
