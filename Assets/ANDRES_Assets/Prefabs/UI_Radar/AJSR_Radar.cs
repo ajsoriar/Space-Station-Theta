@@ -23,27 +23,8 @@ public class AJSR_Radar : MonoBehaviour
         Debug.Log("[Radar] Player position: " + playerPosition);
     }
 
-    /*
     private void Update()
     {
-        // Find all objects tagged as "Enemies" within the detection radius
-        Collider[] colliders = Physics.OverlapSphere(playerTransform.position, detectionRadius, LayerMask.GetMask("Enemy"));
-
-        // Store the coordinates of the detected enemies
-        List<Vector3> enemyPositions = new List<Vector3>();
-        foreach (Collider collider in colliders)
-        {
-            enemyPositions.Add(collider.transform.position);
-        }
-
-        // Process the enemy positions (e.g., display on radar UI, apply AI logic, etc.)
-        ProcessEnemyPositions(enemyPositions);
-    }
-    */
-
-    private void Update()
-    {
-
         enemyObjectsNearMe.Clear();
 
         GameObject[] enemyObjects = GameObject.FindGameObjectsWithTag("Enemy");
@@ -65,24 +46,12 @@ public class AJSR_Radar : MonoBehaviour
             }
         }
 
-        int count = enemyObjectsNearMe.Count;
-        
+        int count = enemyObjectsNearMe.Count;       
         GameManager.THIS.playerData.enemiesNearMe = enemyObjectsNearMe.Count;
-
         ProcessEnemyPositions(enemyObjectsNearMe);
     }
 
-    /*
-    public void CreateSphere(Vector3 position, float scale, Transform parent)
-    {
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.position = position;
-        sphere.transform.localScale = new Vector3(scale, scale, scale);
-        sphere.transform.SetParent(parent);
-    }
-    */
-
-    // Change the function i provided so so the position of the new sphere is relative to the Transform parent and not to the scene
+    // Change the function I provided so the position of the new sphere is relative to the Transform parent and not to the scene
     public void CreateSphere(Vector3 localPosition, float scale, Transform parent)
     {
         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -104,14 +73,11 @@ public class AJSR_Radar : MonoBehaviour
 
     private void ProcessEnemyPositions(List<GameObject> enemiesToDraw)
     {
-
-        // Clear the radar
+        // 1. Clear the radar
         Transform uiParent = transform.Find("Screen/ENEMIES");
         DestroyAllChildren(uiParent);
 
-        // Draw enemies in the radar
-
-        //SphereCreator sphereCreator = GetComponent<SphereCreator>();
+        // 2. Draw enemies in the radar
 
         // Find the parent object "Screen/ENEMIES"
         Transform parentObject = transform.Find("Screen/ENEMIES");
@@ -122,23 +88,14 @@ public class AJSR_Radar : MonoBehaviour
             return;
         }
 
-        /*
-        foreach (GameObject enemy in enemiesToDraw)
-        {
-            //Vector3 enemyPosition = new Vector3(0, 0, 0);
-            Vector3 enemyPosition = enemy.transform.position;
-            float enemyScale = 0.02f;// 1f; // Adjust the scale of the sphere as needed
-
-            // Create a sphere as a child of the parentObject at the enemy's position
-            CreateSphere(enemyPosition, enemyScale, parentObject);
-        }
-        */
-
         // In the following piece of code, scale the position x, z of every enemy by 0.001 and set the y to 0
         foreach (GameObject enemy in enemiesToDraw)
         {
             Vector3 enemyPosition = enemy.transform.position;
             float enemyScale = 0.02f; // Adjust the scale of the sphere as needed
+
+            enemyPosition.x -= playerPosition.x;
+            enemyPosition.y -= playerPosition.y;
 
             // Scale the x and z positions by 0.001 and set the y position to 0
             enemyPosition.x *= 0.01f;
@@ -151,66 +108,3 @@ public class AJSR_Radar : MonoBehaviour
 
     }
 }
-
-/*
-public class SphereCreator : MonoBehaviour
-{
-    public GameObject spherePrefab;
-
-    public void CreateSphere(Vector3 position, float scale, Transform parent)
-    {
-        if (spherePrefab == null)
-        {
-            Debug.LogError("Sphere prefab is not assigned.");
-            return;
-        }
-
-        GameObject sphere = Instantiate(spherePrefab, position, Quaternion.identity);
-        sphere.transform.localScale = Vector3.one * scale;
-        sphere.transform.SetParent(parent);
-    }
-}
-*/
-
-/*
-
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Radar : MonoBehaviour
-{
-    public float detectionRadius = 20f;
-
-    private Transform playerTransform;
-
-    private void Start()
-    {
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        playerTransform = playerObject.transform;
-    }
-
-    private void Update()
-    {
-        // Find all objects tagged as "Enemies" within the detection radius
-        Collider[] colliders = Physics.OverlapSphere(playerTransform.position, detectionRadius, LayerMask.GetMask("Enemies"));
-
-        // Store the coordinates of the detected enemies
-        List<Vector3> enemyPositions = new List<Vector3>();
-        foreach (Collider collider in colliders)
-        {
-            enemyPositions.Add(collider.transform.position);
-        }
-
-        // Process the enemy positions (e.g., display on radar UI, apply AI logic, etc.)
-        ProcessEnemyPositions(enemyPositions);
-    }
-
-    private void ProcessEnemyPositions(List<Vector3> enemyPositions)
-    {
-        // TODO: Implement your desired logic here
-        // You can access the enemy positions and perform any actions you need
-        // For example, you can display them on a radar UI or apply AI behavior to the enemies
-    }
-}
- 
-*/
