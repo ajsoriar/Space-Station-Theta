@@ -123,13 +123,14 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         //_animator.Play(PLAYER_DIES);
 
         // Remove radar & Remove oxygen
-
         GameObject objt = transform.Find("Main_Camera_Primera_Persona/PlayerUI").gameObject;
         objt.SetActive(false);
 
         // remove hands
         objt = transform.Find("Main_Camera_Primera_Persona/Hands").gameObject;
         objt.SetActive(false);
+
+        Cursor.visible = true;
     }
 	
     void updateRIPLayer() {
@@ -186,20 +187,17 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             playerIsMoving = false;
         }
 
-        if (playerIsMoving)
-        {
-            counterTimer += Time.deltaTime;
-            if (counterTimer >= 0.5f) // Increase counter every 0.5 seconds
+        if (playerIsMoving) {
+            if (counterTimer >= 0.5f || (counter == 0 && counterTimer == 0f)) // Increase counter every 0.5 seconds
             {
                 counter++;
                 counterTimer = 0f;
                 walkSound();
                 decreaseOxigenOpeStep();
                 manageRIP();
-            }
-        }
-        else
-        {
+            }   
+            counterTimer += Time.deltaTime;
+        } else {
             // Reset the counter and timer if the player is not moving
             counter = 0;
             counterTimer = 0f;
