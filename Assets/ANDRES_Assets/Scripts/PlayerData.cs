@@ -40,4 +40,5 @@ public class PlayerData
     //Other
     public int totalEnemies;
     public int enemiesNearMe;
+    public bool isDeath; // death is an irreversible process where someone loses their existence as a person.
 }

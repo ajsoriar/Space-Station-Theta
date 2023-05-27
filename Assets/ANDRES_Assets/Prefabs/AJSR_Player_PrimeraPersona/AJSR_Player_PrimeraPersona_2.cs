@@ -47,9 +47,18 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     private float counterTimer = 0;
     private int stepSound = -1; // Two different sounds for every foot. (-1 left and 1 right, stereo!)  
 
+    //private Animation anim;
+    //private Animator _animator;
+    //const string PLAYER_IDLE = "Player_Alive";
+    //const string PLAYER_DIES = "Player_Dies";
+    //const string PLAYER_JUMP = "Player_Jump";
+    //public FadeOutObject fadeOutObject;
+
     private void Awake()
     {
         THIS = this;
+        GameManager.THIS.playerData.damage = 0;
+        GameManager.THIS.playerData.oxygen = 15;
     }
     void Start()
     {
@@ -63,25 +72,24 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
 
         rayLength = 100f;
 
-        InitHands();
         EnableHand(0);
-    }
 
-    private void InitHands()
-    {
-        //throw new NotImplementedException();
+        //_animator = gameObject.GetComponent<Animator>();
+        enableGameOverTextLayer(false);
+        enableDieLayer(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.THIS.playerData.isDeath) return;
+   
         SetVectors();
         SetRotationAngles();
 
         if (Input.GetMouseButtonDown(0) && targetHitObject.collider != null)
         {
             Debug.Log("[puerta] !!!!! **** El raycast detecta un elemento interactivo **** !!!!!");
-
             StartCoroutine(moveHandForward(HandGroup));
 
             // Call the "DoSomething" function on the hit object
@@ -94,14 +102,65 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             SoundManager.THIS.PlaySound_ShotWeapon();
         }
 
-        /*
-        float velocityMagnitude = rb.velocity.magnitude;
-        string velocityString = velocityMagnitude.ToString("F2");
-        */
+    }
+	
+    void manageRIP() {
+        if (GameManager.THIS.playerData.oxygen <= 0 || GameManager.THIS.playerData.damage >= 100) {
+            die();
+        } else {
+            updateRIPLayer();
+        }
+    }
+	
+    void die() {
+        Debug.Log("[RIP] Just Die! ");
+        GameManager.THIS.playerData.isDeath = true;
+        SoundManager.THIS.PlaySound_OutOfOxygen();
+
+        enableGameOverTextLayer(true);
+
+        // fall to the ground
+        //_animator.Play(PLAYER_DIES);
+
+        // Remove radar & Remove oxygen
+
+        GameObject objt = transform.Find("Main_Camera_Primera_Persona/PlayerUI").gameObject;
+        objt.SetActive(false);
+
+        // remove hands
+        objt = transform.Find("Main_Camera_Primera_Persona/Hands").gameObject;
+        objt.SetActive(false);
+    }
+	
+    void updateRIPLayer() {
+        if (GameManager.THIS.playerData.oxygen <= 5) {
+            Debug.Log("[RIP] less than 10, oxygen: "+ GameManager.THIS.playerData.oxygen );
+            // Show the red layer
+            GameObject gameOverRedLayer = GameObject.Find("Main_Camera_Primera_Persona/RIP/GameOverRedLayer");
+            enableDieLayer(true);
+            Vector3 newPosition = gameOverRedLayer.transform.localPosition;
+            newPosition.z += 0.04f;
+            gameOverRedLayer.transform.localPosition = newPosition;
+        } else {
+            Debug.Log("[RIP] more than 5");
+            // Hide the red layer
+            enableDieLayer(false);
+        }  
     }
 
-    private void FixedUpdate()
-    {
+    void enableDieLayer(bool enable) {
+        GameObject gameOverRedLayer = GameObject.Find("Main_Camera_Primera_Persona/RIP/GameOverRedLayer");
+        gameOverRedLayer.SetActive(enable);
+    }
+
+    void enableGameOverTextLayer(bool enable) {
+        GameObject gameOverRedLayer = GameObject.Find("Main_Camera_Primera_Persona/RIP/GameOverText");
+        gameOverRedLayer.SetActive(enable);
+    }
+
+    private void FixedUpdate() {
+        if (GameManager.THIS.playerData.isDeath) return;
+
         SetMoveAndRotationByPhysics();
         CamRaycast();
 
@@ -136,6 +195,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
                 counterTimer = 0f;
                 walkSound();
                 decreaseOxigenOpeStep();
+                manageRIP();
             }
         }
         else
@@ -200,11 +260,6 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             //playerInRadioactiveAreaTimer = 0f;
         }
     }
-
-
-
-
-
 
     public IEnumerator moveHandForward(GameObject hand, float distanceToMove = 0.5f)
     {
@@ -288,7 +343,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         targetHitObject = default;
         EnableHand(0);
     }
-
+	
     public void setTarget(RaycastHit hit)
     {
         targetHitObject = hit;
@@ -296,6 +351,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         UpdateTextMesh("txtMessage", targetHitObject.collider.gameObject.name);
         EnableHand(1);
     }
+	
     public void EnableHand(int index)
     {
         if (index < 0 || index >= 3)

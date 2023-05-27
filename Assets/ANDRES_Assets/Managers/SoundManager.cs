@@ -43,6 +43,11 @@ public class SoundManager : MonoBehaviour
     {
         audio_scr.PlayOneShot(sound_weapon_main);
     }
+
+    public void PlaySound_OutOfOxygen()
+    {
+        audio_scr.PlayOneShot(sound_weapon_main);
+    }
 }
 
 /*
