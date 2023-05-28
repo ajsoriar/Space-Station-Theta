@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateSphereOnCollision : MonoBehaviour {
+public class CreateExplosionOnCollision : MonoBehaviour {
     public GameObject spherePrefab;
 
     private void OnCollisionEnter(Collision collision) {

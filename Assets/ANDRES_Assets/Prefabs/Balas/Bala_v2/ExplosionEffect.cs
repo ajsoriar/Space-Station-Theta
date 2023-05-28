@@ -43,7 +43,8 @@ public class ExplosionEffect : MonoBehaviour {
         // Check if the explosion effect has ended
         if (normalizedTime >= 1f) {
             // Destroy the object
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            Destroy(transform.parent.gameObject);
         }
     }
 }
