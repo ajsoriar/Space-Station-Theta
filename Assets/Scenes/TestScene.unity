@@ -6438,6 +6438,10 @@ PrefabInstance:
       propertyPath: isMoving
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1242835389740150227, guid: 8002b0cb1bb0c3848bfba86e5ae1ecab, type: 3}
+      propertyPath: balaOriginal
+      value: 
+      objectReference: {fileID: 3181658386134011321, guid: aaeb9e4ebd63e594fad916197a1e6b9d, type: 3}
     - target: {fileID: 1469248721336882429, guid: 8002b0cb1bb0c3848bfba86e5ae1ecab, type: 3}
       propertyPath: m_IsActive
       value: 1
