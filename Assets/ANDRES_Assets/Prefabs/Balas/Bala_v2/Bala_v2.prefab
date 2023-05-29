@@ -59,6 +59,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bala_v2
       objectReference: {fileID: 0}
+    - target: {fileID: 8276439282206597273, guid: 13bee74bbdbc95d41a8ae4d5a80e041f, type: 3}
+      propertyPath: m_TagString
+      value: Projectile
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7455618509363031029, guid: 13bee74bbdbc95d41a8ae4d5a80e041f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 13bee74bbdbc95d41a8ae4d5a80e041f, type: 3}

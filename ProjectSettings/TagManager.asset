@@ -9,6 +9,7 @@ TagManager:
   - Interruptores
   - Enemy
   - RadioactiveArea
+  - Projectile
   layers:
   - Default
   - TransparentFX
