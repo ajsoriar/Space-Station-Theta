@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
         if (THIS == null) {// SINGLETON
             THIS = this;
             transform.SetParent(null);
-            transform.GetChild(0).gameObject.SetActive(true);
+            //transform.GetChild(0).gameObject.SetActive(true);
             DontDestroyOnLoad(gameObject);
         } else {
             Destroy(gameObject);
@@ -54,14 +54,20 @@ public class GameManager : MonoBehaviour
             case GameStates.None:
                 break;
 
-            case GameStates.MainMenu:
+            case GameStates.WelcomeScreen:
+                //MusicManager.THIS.Play_WelcomeScreenMusic();
                 break;
 
-            case GameStates.Loading:
+            case GameStates.MainMenu:
+                //MusicManager.THIS.Play_MainMenuMusic();
                 break;
+
+            //case GameStates.Loading:
+            //    break;
 
             case GameStates.Playing:
 
+                //MusicManager.THIS.Play_GamePlayMusic();
                 Time.timeScale = 1f;
                 break;
 
@@ -77,8 +83,9 @@ public class GameManager : MonoBehaviour
 public enum GameStates
 {
     None,
+    WelcomeScreen,
     MainMenu,
-    Loading,
+    //Loading,
     Playing,
     GamePaused
 }

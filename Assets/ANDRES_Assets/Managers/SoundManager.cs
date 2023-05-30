@@ -13,6 +13,19 @@ public class SoundManager : MonoBehaviour
     public AudioClip sound_getCoin;
     public AudioClip sound_weapon_main;
 
+
+    // Welcome screen
+    public void ByByWelcomeSceneButton() {
+        audio_scr.PlayOneShot(sound_weapon_main);
+    }
+
+
+    // Main menu
+
+
+
+    // Game
+
     private void Awake() {
         THIS = this;
         audio_scr = GetComponent<AudioSource>();
