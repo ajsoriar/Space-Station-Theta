@@ -29,9 +29,13 @@ public class PlayerData
     public float weaponTemperatureMax; // 100
 
     // Skils
-    public bool fastRunUnlocked;
-    public bool jumpUnlocked;
+    //public bool fastRunUnlocked;
+    //public bool jumpUnlocked;
     public bool energyShieldUnlocked;
+
+    // Speed Boots
+    public int speedBootsSteps;
+    public int speedBootsVelocity;
 
     // Items
     public int coinsCounter;

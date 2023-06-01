@@ -59,7 +59,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     {
         THIS = this;
         GameManager.THIS.playerData.damage = 0;
-        GameManager.THIS.playerData.oxygen = 15;
+        GameManager.THIS.playerData.oxygen = 100;
     }
     void Start()
     {
@@ -177,6 +177,9 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         SetMoveAndRotationByPhysics();
         CamRaycast();
 
+        // public int speedBootsSteps;
+        // public int speedBootsVelocity;
+
         UpdateTextMesh("HolaText2",
             "isMoving: " + playerIsMoving + "\n" + "velocity, x:" + moveVector.x + ", z:" + moveVector.z +"\n" +
             "Coins: "+ GameManager.THIS.playerData.coinsCounter +"\n" +
@@ -189,9 +192,13 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             "bulletsCounter: " + GameManager.THIS.playerData.bulletsCounter + "\n" +
             "weaponTemperature: " + GameManager.THIS.playerData.weaponTemperature + "\n" +
             "totalEnemies: " + GameManager.THIS.playerData.totalEnemies + "\n" +
-            "enemiesNearMe: " + GameManager.THIS.playerData.enemiesNearMe + "\n" + 
+            "enemiesNearMe: " + GameManager.THIS.playerData.enemiesNearMe + "\n" +
+            "speedBootsSteps: " + GameManager.THIS.playerData.speedBootsSteps + "\n" +
+            "speedBootsVelocity: " + GameManager.THIS.playerData.speedBootsVelocity + "\n" +
             "."
         );
+
+        printScreenInfo();
 
         if (moveVector.x != 0f && moveVector.z != 0f) {
             playerIsMoving = true;
@@ -200,12 +207,12 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         }
 
         if (playerIsMoving) {
-            if (counterTimer >= calcMovTime() || (counter == 0 && counterTimer == 0f)) // Increase counter every step;
-            {
+            if (counterTimer >= calcMovTime() || (counter == 0 && counterTimer == 0f)) { // Increase counter every step;
                 counter++;
                 counterTimer = 0f;
                 walkSound();
                 decreaseOxigenOpeStep();
+                decreaseBootsStep();
                 manageRIP();
             }   
             counterTimer += Time.deltaTime;
@@ -214,6 +221,21 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             counter = 0;
             counterTimer = 0f;
         }
+    }
+
+    // ---- Info bars ----
+    void printScreenInfo() {
+        if (GameManager.THIS.playerData.speedBootsSteps > 0) {
+            UpdateTextMesh("txtSpeedBoots",
+                "Velocity: x" + GameManager.THIS.playerData.speedBootsVelocity +
+                " Steps: " + GameManager.THIS.playerData.speedBootsSteps
+            );
+        } else {
+            UpdateTextMesh("txtSpeedBoots"," ");
+        }
+
+        UpdateTextMesh("txtKeysCounter", "Keys: " + GameManager.THIS.playerData.keysCounter);
+        UpdateTextMesh("txtCoinsCounter", "Coins: " + GameManager.THIS.playerData.coinsCounter);
     }
 
     void walkSound() {
@@ -225,12 +247,14 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     }
 
     float calcPlayerMovSpeed() {
+        if (GameManager.THIS.playerData.speedBootsSteps > 0) return (walkSpeed * GameManager.THIS.playerData.speedBootsVelocity);
         if (playerIsRunning) return (walkSpeed * 2);
         return walkSpeed;
     }
 
     float calcMovTime() {
-        if (playerIsRunning) return 0.25f;
+        if (GameManager.THIS.playerData.speedBootsSteps > 0) return (0.5f / GameManager.THIS.playerData.speedBootsVelocity);
+        if (playerIsRunning) return (0.5f/2);
         return 0.5f;
     }
 
@@ -238,6 +262,12 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         Debug.Log("[Steps] decreaseOxigenOpeStep()");
         GameManager.THIS.playerData.oxygen -= 1;
         PercentageBar.THIS.refreshBar();
+    }
+
+    void decreaseBootsStep() {
+        if (GameManager.THIS.playerData.speedBootsSteps > 0) {
+            GameManager.THIS.playerData.speedBootsSteps -= 1;
+        }
     }
 
     void SetVectors() {
@@ -364,16 +394,14 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         EnableHand(0);
     }
 	
-    public void setTarget(RaycastHit hit)
-    {
+    public void setTarget(RaycastHit hit) {
         targetHitObject = hit;
         //AndresHelpers.
         UpdateTextMesh("txtMessage", targetHitObject.collider.gameObject.name);
         EnableHand(1);
     }
 	
-    public void EnableHand(int index)
-    {
+    public void EnableHand(int index) {
         if (index < 0 || index >= 3)
         {
             Debug.LogWarning("Invalid index: " + index);
