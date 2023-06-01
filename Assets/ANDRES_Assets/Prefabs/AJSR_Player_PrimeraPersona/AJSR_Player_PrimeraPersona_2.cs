@@ -17,7 +17,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     RaycastHit targetHitObject;
 
     [Range(1f, 10f)]
-    public float speedMov;
+    public float walkSpeed;
 
     [Range(1f, 100f)]
     public float speedRot;
@@ -43,6 +43,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
 
     // Moving
     public bool playerIsMoving = false;
+    public bool playerIsRunning = false;
     private float counter = 0;
     private float counterTimer = 0;
     private int stepSound = -1; // Two different sounds for every foot. (-1 left and 1 right, stereo!)  
@@ -65,7 +66,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         cam = Camera.main.transform;
 
-        if (speedMov <= 0f) speedMov = 3f;
+        if (walkSpeed <= 0f) walkSpeed = 3f;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -102,8 +103,19 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             SoundManager.THIS.PlaySound_ShotWeapon();
         }
 
+        // Salto
+        //if (Input.GetKeyDown(KeyCode.Space) && onGround) {
+        //    float jumpForce = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
+        //    rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
+        //}
+
+        // Run
+        if (Input.GetKeyDown(KeyCode.R)) playerIsRunning = true;
+        if (Input.GetKeyUp(KeyCode.R)) playerIsRunning = false;
+
+        // ------------------------------------------------------------------------------------------------
     }
-	
+
     void manageRIP() {
         if (GameManager.THIS.playerData.oxygen <= 0 || GameManager.THIS.playerData.damage >= 100) {
             die();
@@ -188,7 +200,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         }
 
         if (playerIsMoving) {
-            if (counterTimer >= 0.5f || (counter == 0 && counterTimer == 0f)) // Increase counter every 0.5 seconds
+            if (counterTimer >= calcMovTime() || (counter == 0 && counterTimer == 0f)) // Increase counter every step;
             {
                 counter++;
                 counterTimer = 0f;
@@ -210,6 +222,16 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         } else { // -1
             SoundManager.THIS.PlaySound_FootLeft();
         }
+    }
+
+    float calcPlayerMovSpeed() {
+        if (playerIsRunning) return (walkSpeed * 2);
+        return walkSpeed;
+    }
+
+    float calcMovTime() {
+        if (playerIsRunning) return 0.25f;
+        return 0.5f;
     }
 
     public void decreaseOxigenOpeStep() {
@@ -234,7 +256,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     }
 
     void SetMoveAndRotationByPhysics() {
-        rb.MovePosition(rb.position + moveVector * speedMov * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + moveVector * calcPlayerMovSpeed() * Time.fixedDeltaTime);
         Quaternion deltaRotation = Quaternion.Euler(Vector3.up * horizontalAngles * Time.fixedDeltaTime);
         rb.MoveRotation(deltaRotation);
     }
@@ -394,9 +416,5 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             Debug.LogError("Could not find game object: " + textMeshName);
         }
     }
-
-
-
-
 
 }
