@@ -9,7 +9,7 @@ public class AJSR_Interruptor_puerta : MonoBehaviour
 
     public bool dorIsOpen;
     Animator anim;
-    bool onGoingAnimation;
+    public bool onGoingAnimation;
 
     void Start() {
 

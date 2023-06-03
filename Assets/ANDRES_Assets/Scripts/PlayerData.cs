@@ -18,9 +18,9 @@ public class PlayerData
     public int oxygenMax; // 100
     
     // Health
-    public float healthCaseCount;
-    public float damage;
-    public float damageMax; //100
+    public int healthCaseCount;
+    public int health;
+    public int healthMax; //100
 
     // Weapons
     public int currentWeapon; // 0 Hands, 1 Basic, 2 Bazooka, 3 LoveYou!

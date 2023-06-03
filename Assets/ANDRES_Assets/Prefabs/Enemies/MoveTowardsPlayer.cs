@@ -17,7 +17,6 @@ public class MoveTowardsPlayer : MonoBehaviour
     private bool isPlayerNear = false;
     public float checkInterval = 3f;
     public float playerDistanceThreshold = 5f;
-
     private GameObject player;
 
     private void Start()

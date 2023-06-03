@@ -58,21 +58,17 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     private void Awake()
     {
         THIS = this;
-        GameManager.THIS.playerData.damage = 0;
+        GameManager.THIS.playerData.health = 100;
         GameManager.THIS.playerData.oxygen = 100;
     }
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         cam = Camera.main.transform;
-
         if (walkSpeed <= 0f) walkSpeed = 3f;
-
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
         rayLength = 100f;
-
         EnableHand(0);
 
         //_animator = gameObject.GetComponent<Animator>();
@@ -116,8 +112,9 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         // ------------------------------------------------------------------------------------------------
     }
 
+    // GameManager.THIS.playerData.health = 100;
     void manageRIP() {
-        if (GameManager.THIS.playerData.oxygen <= 0 || GameManager.THIS.playerData.damage >= 100) {
+        if (GameManager.THIS.playerData.oxygen <= 0 || GameManager.THIS.playerData.health <= 0) {
             die();
         } else {
             updateRIPLayer();
@@ -146,8 +143,8 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     }
 	
     void updateRIPLayer() {
-        if (GameManager.THIS.playerData.oxygen <= 5) {
-            Debug.Log("[RIP] less than 10, oxygen: "+ GameManager.THIS.playerData.oxygen );
+        if (GameManager.THIS.playerData.oxygen <= 5 || GameManager.THIS.playerData.health <= 5) {
+            Debug.Log("[RIP] less than 10, oxygen: " + GameManager.THIS.playerData.oxygen + "health: "+ GameManager.THIS.playerData.health);
             // Show the red layer
             GameObject gameOverRedLayer = GameObject.Find("Main_Camera_Primera_Persona/RIP/GameOverRedLayer");
             enableDieLayer(true);
@@ -158,7 +155,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             Debug.Log("[RIP] more than 5");
             // Hide the red layer
             enableDieLayer(false);
-        }  
+        }
     }
 
     void enableDieLayer(bool enable) {
@@ -187,7 +184,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             "oxigenBotleCount: " + GameManager.THIS.playerData.oxygenBotleCount + "\n" +
             "oxigen: " + GameManager.THIS.playerData.oxygen + "\n" +
             "healthCaseCount: " + GameManager.THIS.playerData.healthCaseCount + "\n" +
-            "damage: " + GameManager.THIS.playerData.damage + "\n" +
+            "health: " + GameManager.THIS.playerData.health + "\n" +
             "currentWeapon: " + GameManager.THIS.playerData.currentWeapon + "\n" +
             "bulletsCounter: " + GameManager.THIS.playerData.bulletsCounter + "\n" +
             "weaponTemperature: " + GameManager.THIS.playerData.weaponTemperature + "\n" +
@@ -268,6 +265,19 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         if (GameManager.THIS.playerData.speedBootsSteps > 0) {
             GameManager.THIS.playerData.speedBootsSteps -= 1;
         }
+    }
+
+    public void decreaseHeath(int decValue) {
+        Debug.Log("[Health] decreaseHeath()");
+        if (decValue == 0) decValue = 1;
+        int curr = GameManager.THIS.playerData.health;
+        if ( (curr - decValue)<= 0 ) {
+            GameManager.THIS.playerData.health = 0;
+        } else {
+            GameManager.THIS.playerData.health -= decValue;
+        }
+        PlayerHealthBar.THIS.refreshBar();
+        manageRIP();
     }
 
     void SetVectors() {

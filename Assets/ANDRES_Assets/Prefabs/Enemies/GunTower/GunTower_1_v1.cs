@@ -96,7 +96,7 @@ public class GunTower_1_v1 : MonoBehaviour
 
     void GunRaycast()
     {
-        Transform childObjectTransform = transform.Find("Tower/Gun/GunMouth");
+        Transform childObjectTransform = transform.Find("Tower/GunHead");
         Ray ray = new Ray(childObjectTransform.position, childObjectTransform.forward);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 200))
