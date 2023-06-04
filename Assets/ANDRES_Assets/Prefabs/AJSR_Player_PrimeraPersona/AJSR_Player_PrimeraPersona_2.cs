@@ -13,6 +13,8 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
 {
     public static AJSR_Player_PrimeraPersona_2 THIS;
 
+    public bool DEBUG_MODE = false;
+
     public float rayLength;
     RaycastHit targetHitObject;
 
@@ -109,6 +111,10 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R)) playerIsRunning = true;
         if (Input.GetKeyUp(KeyCode.R)) playerIsRunning = false;
 
+        if (Input.GetKeyDown(KeyCode.D)) {
+            if (DEBUG_MODE == false) { DEBUG_MODE = true; } else { DEBUG_MODE = false; };
+        }
+
         // ------------------------------------------------------------------------------------------------
     }
 
@@ -139,23 +145,43 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         objt = transform.Find("Main_Camera_Primera_Persona/Hands").gameObject;
         objt.SetActive(false);
 
+        // remove on screen txets
+        objt = transform.Find("Main_Camera_Primera_Persona/Canvas/TextInScreen").gameObject;
+        objt.SetActive(false);
+
         Cursor.visible = true;
     }
-	
+
+    int newtimeToDieValue = 10, previousTimeToDieValue = 10;
+
     void updateRIPLayer() {
-        if (GameManager.THIS.playerData.oxygen <= 5 || GameManager.THIS.playerData.health <= 5) {
-            Debug.Log("[RIP] less than 10, oxygen: " + GameManager.THIS.playerData.oxygen + "health: "+ GameManager.THIS.playerData.health);
+        if (GameManager.THIS.playerData.oxygen <= 10 || GameManager.THIS.playerData.health <= 10) {
+            Debug.Log("[RIP] less than 10!, Oxygen: " + GameManager.THIS.playerData.oxygen + "Health: "+ GameManager.THIS.playerData.health);
+
             // Show the red layer
             GameObject gameOverRedLayer = GameObject.Find("Main_Camera_Primera_Persona/RIP/GameOverRedLayer");
             enableDieLayer(true);
-            Vector3 newPosition = gameOverRedLayer.transform.localPosition;
-            newPosition.z += 0.04f;
-            gameOverRedLayer.transform.localPosition = newPosition;
+
+            newtimeToDieValue = getTheLowerOfTwoValues(GameManager.THIS.playerData.oxygen, GameManager.THIS.playerData.health);
+            if (newtimeToDieValue < previousTimeToDieValue) {
+                previousTimeToDieValue = newtimeToDieValue;
+                Vector3 newPosition = gameOverRedLayer.transform.localPosition;
+                newPosition.z += 0.04f;
+                gameOverRedLayer.transform.localPosition = newPosition;            
+            }
+
         } else {
-            Debug.Log("[RIP] more than 5");
-            // Hide the red layer
-            enableDieLayer(false);
+            Debug.Log("[RIP] more than 10");
+            enableDieLayer(false); // Hide the red layer
+            newtimeToDieValue = 10;
+            previousTimeToDieValue = 10;
         }
+    }
+
+    int getTheLowerOfTwoValues(int a, int b) {
+        if (a == b) return a;
+        if (a > b) return b;
+        return a;
     }
 
     void enableDieLayer(bool enable) {
@@ -173,29 +199,9 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
 
         SetMoveAndRotationByPhysics();
         CamRaycast();
-
-        // public int speedBootsSteps;
-        // public int speedBootsVelocity;
-
-        UpdateTextMesh("HolaText2",
-            "isMoving: " + playerIsMoving + "\n" + "velocity, x:" + moveVector.x + ", z:" + moveVector.z +"\n" +
-            "Coins: "+ GameManager.THIS.playerData.coinsCounter +"\n" +
-            "Keys: " + GameManager.THIS.playerData.keysCounter +"\n" +
-            "oxigenBotleCount: " + GameManager.THIS.playerData.oxygenBotleCount + "\n" +
-            "oxigen: " + GameManager.THIS.playerData.oxygen + "\n" +
-            "healthCaseCount: " + GameManager.THIS.playerData.healthCaseCount + "\n" +
-            "health: " + GameManager.THIS.playerData.health + "\n" +
-            "currentWeapon: " + GameManager.THIS.playerData.currentWeapon + "\n" +
-            "bulletsCounter: " + GameManager.THIS.playerData.bulletsCounter + "\n" +
-            "weaponTemperature: " + GameManager.THIS.playerData.weaponTemperature + "\n" +
-            "totalEnemies: " + GameManager.THIS.playerData.totalEnemies + "\n" +
-            "enemiesNearMe: " + GameManager.THIS.playerData.enemiesNearMe + "\n" +
-            "speedBootsSteps: " + GameManager.THIS.playerData.speedBootsSteps + "\n" +
-            "speedBootsVelocity: " + GameManager.THIS.playerData.speedBootsVelocity + "\n" +
-            "."
-        );
-
         printScreenInfo();
+        PercentageBar.THIS.refreshBar();
+        PlayerHealthBar.THIS.refreshBar();
 
         if (moveVector.x != 0f && moveVector.z != 0f) {
             playerIsMoving = true;
@@ -214,7 +220,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             }   
             counterTimer += Time.deltaTime;
         } else {
-            // Reset the counter and timer if the player is not moving
+            // Reset counter and timer if the player is not moving
             counter = 0;
             counterTimer = 0f;
         }
@@ -222,10 +228,34 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
 
     // ---- Info bars ----
     void printScreenInfo() {
+
+        if (DEBUG_MODE) {
+            UpdateTextMesh("HolaText2",
+                "isMoving: " + playerIsMoving + "\n" + "velocity, x:" + moveVector.x + ", z:" + moveVector.z + "\n" +
+                "Coins: " + GameManager.THIS.playerData.coinsCounter + "\n" +
+                "Keys: " + GameManager.THIS.playerData.keysCounter + "\n" +
+                "oxigenBotleCount: " + GameManager.THIS.playerData.oxygenBotleCount + "\n" +
+                "oxigen: " + GameManager.THIS.playerData.oxygen + "\n" +
+                "healthCaseCount: " + GameManager.THIS.playerData.healthCaseCount + "\n" +
+                "health: " + GameManager.THIS.playerData.health + "\n" +
+                "currentWeapon: " + GameManager.THIS.playerData.currentWeapon + "\n" +
+                "bulletsCounter: " + GameManager.THIS.playerData.bulletsCounter + "\n" +
+                "weaponTemperature: " + GameManager.THIS.playerData.weaponTemperature + "\n" +
+                "totalEnemies: " + GameManager.THIS.playerData.totalEnemies + "\n" +
+                "enemiesNearMe: " + GameManager.THIS.playerData.enemiesNearMe + "\n" +
+                "speedBootsSteps: " + GameManager.THIS.playerData.speedBootsSteps + "\n" +
+                "speedBootsVelocity: " + GameManager.THIS.playerData.speedBootsVelocity + "\n" +
+                "."
+            );
+        }
+
+        UpdateTextMesh("txtHealth", "Health: " + GameManager.THIS.playerData.health + "%");
+        UpdateTextMesh("txtOxygen", "Oxygen: " + GameManager.THIS.playerData.oxygen + "%");
+
         if (GameManager.THIS.playerData.speedBootsSteps > 0) {
             UpdateTextMesh("txtSpeedBoots",
-                "Velocity: x" + GameManager.THIS.playerData.speedBootsVelocity +
-                " Steps: " + GameManager.THIS.playerData.speedBootsSteps
+                "Vel.: x" + GameManager.THIS.playerData.speedBootsVelocity +
+                " Steps: -" + GameManager.THIS.playerData.speedBootsSteps
             );
         } else {
             UpdateTextMesh("txtSpeedBoots"," ");

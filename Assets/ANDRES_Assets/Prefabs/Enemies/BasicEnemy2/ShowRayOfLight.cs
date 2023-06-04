@@ -9,7 +9,6 @@ public class ShowRayOfLight : MonoBehaviour {
     public int damageGenerated = 10;
 
     private GameObject indexChild;
-    private float timer = 0f;
     private bool isPlayerNear = false;
     float distance;
     GameObject player;
@@ -41,12 +40,8 @@ public class ShowRayOfLight : MonoBehaviour {
                 // damage sound here 
 
             }
-
             StartCoroutine(ExecuteAfterDelay(0.6f));
-        } 
-
-
-
+        }
     }
 
     private IEnumerator ExecuteAfterDelay(float delay) {

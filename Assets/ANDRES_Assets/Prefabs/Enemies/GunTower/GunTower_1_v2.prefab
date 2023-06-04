@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1998711340729064992}
   m_Layer: 0
-  m_Name: GunMouth
+  m_Name: GunMouth_1
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 620035125810870017}
   m_LocalRotation: {x: -0.7071066, y: -0, z: -0, w: 0.70710707}
-  m_LocalPosition: {x: -3.58, y: 1.102, z: 0}
+  m_LocalPosition: {x: -3.58, y: 1.903, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -137,7 +137,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737943396889922219}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2, y: 0, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 4769147535367332381}
   - component: {fileID: 1421206526204609543}
   m_Layer: 0
-  m_Name: Gun (1)
+  m_Name: Gun_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 7493976841117185311}
   - component: {fileID: 3212646401214171990}
   m_Layer: 0
-  m_Name: Gun (2)
+  m_Name: Gun_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -554,7 +554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7344181478919067613}
   m_Layer: 0
-  m_Name: GunMouth
+  m_Name: GunMouth_2
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -568,7 +568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7344181478919067602}
   m_LocalRotation: {x: -0.7071066, y: -0, z: -0, w: 0.70710707}
-  m_LocalPosition: {x: 3.5, y: 1.106, z: -0}
+  m_LocalPosition: {x: 3.5, y: 1.907, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -640,6 +640,8 @@ MonoBehaviour:
   direccionRot: 0
   velocidadRot: 0
   cabeza: {fileID: 4801043404248136776}
+  disparando: 0
+  balaOriginal: {fileID: 6668649003346257836, guid: 7fc6856cfcba6c840a06d68d30861087, type: 3}
 --- !u!114 &9008184757589430701
 MonoBehaviour:
   m_ObjectHideFlags: 0
