@@ -62,25 +62,3 @@ public class SoundManager : MonoBehaviour
         audio_scr.PlayOneShot(sound_weapon_main);
     }
 }
-
-/*
-public class SoundManager : MonoBehaviour
-{
-
-    public static SoundManager THIS;
-
-    public AudioSource audio_scr1;
-
-    private void Awake()
-    {
-        THIS = this;
-        audio_scr1 = GetComponent<AudioSource>();
-    }
-
-    public void PlaySound_GetItem()
-    {
-        audio_scr1.Play();
-    }
-}
-
-*/

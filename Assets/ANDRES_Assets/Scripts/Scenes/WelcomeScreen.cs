@@ -2,22 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WelcomeScreen : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class WelcomeScreen : MonoBehaviour {
+
+    void Start() {
+        GameManager.THIS.SetState(GameStates.WelcomeScreen);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) {
-            Debug.Log("[Btn] (B) AJSR_Action_Btn_MainMenu()");
-            WelcomeManager.THIS.AJSR_ByByWelcomeSceneButton();
-            WelcomeManager.THIS.AJSR_Action_Btn_MainMenu();
-        }
+        if (Input.GetMouseButtonDown(0)) goNextScreen();
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) goNextScreen();
     }
 
+    private void goNextScreen() {
+        SoundManager.THIS.PlaySound_ClickButton();
+        //RouterManager.THIS.AJSR_ByByWelcomeSceneButton();
+        RouterManager.THIS.AJSR_Action_Btn_MainMenu();        
+    }
 }

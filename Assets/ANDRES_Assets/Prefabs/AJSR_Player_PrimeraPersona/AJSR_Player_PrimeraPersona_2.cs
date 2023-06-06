@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -76,13 +77,20 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         //_animator = gameObject.GetComponent<Animator>();
         enableGameOverTextLayer(false);
         enableDieLayer(false);
+        enablePauseLayer(false);
+        enableWinLayer(false);
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (GameManager.THIS.playerData.isDeath) return;
-   
+    void Update() {
+
+        if (GameManager.THIS.getGameState() == GameStates.Die || GameManager.THIS.getGameState() == GameStates.Win) { 
+            if (Input.GetMouseButtonDown(0) ) {
+                RouterManager.THIS.AJSR_Action_Btn_Game_Over_GotoMainMenu();
+            }     
+            return;
+        }
+
         SetVectors();
         SetRotationAngles();
 
@@ -111,11 +119,23 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R)) playerIsRunning = true;
         if (Input.GetKeyUp(KeyCode.R)) playerIsRunning = false;
 
-        if (Input.GetKeyDown(KeyCode.D)) {
+        if (Input.GetKeyDown(KeyCode.H)) {
             if (DEBUG_MODE == false) { DEBUG_MODE = true; } else { DEBUG_MODE = false; };
         }
 
-        // ------------------------------------------------------------------------------------------------
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Debug.Log("ESC key pressed");
+            RouterManager.THIS.AJSR_Action_Btn_Game_Over_GotoMainMenu();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y)) {
+            win();
+        }
+    }
+
+    void win() {
+        GameManager.THIS.SetState(GameStates.Win);
+        enableWinLayer(true);
     }
 
     // GameManager.THIS.playerData.health = 100;
@@ -130,6 +150,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     void die() {
         Debug.Log("[RIP] Just Die! ");
         GameManager.THIS.playerData.isDeath = true;
+        GameManager.THIS.SetState(GameStates.Die);
         SoundManager.THIS.PlaySound_OutOfOxygen();
 
         enableGameOverTextLayer(true);
@@ -150,6 +171,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         objt.SetActive(false);
 
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     int newtimeToDieValue = 10, previousTimeToDieValue = 10;
@@ -177,21 +199,28 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             previousTimeToDieValue = 10;
         }
     }
-
     int getTheLowerOfTwoValues(int a, int b) {
         if (a == b) return a;
         if (a > b) return b;
         return a;
     }
-
     void enableDieLayer(bool enable) {
-        GameObject gameOverRedLayer = GameObject.Find("Main_Camera_Primera_Persona/RIP/GameOverRedLayer");
-        gameOverRedLayer.SetActive(enable);
+        GameObject lay1 = GameObject.Find("Main_Camera_Primera_Persona/RIP/GameOverRedLayer");
+        lay1.SetActive(enable);
     }
-
     void enableGameOverTextLayer(bool enable) {
-        GameObject gameOverRedLayer = GameObject.Find("Main_Camera_Primera_Persona/RIP/GameOverText");
-        gameOverRedLayer.SetActive(enable);
+        GameObject lay3 = GameObject.Find("Main_Camera_Primera_Persona/RIP/GameOverText");
+        lay3.SetActive(enable);
+    }
+    public void enablePauseLayer(bool enable) {
+        //GameObject lay2 = GameObject.Find("GamePausedText");
+        GameObject lay2 = transform.Find("Main_Camera_Primera_Persona/GamePausedText").gameObject;
+        lay2.SetActive(enable);
+    }    
+    public void enableWinLayer(bool enable) {
+        //GameObject lay4 = GameObject.Find("YouWin");
+        GameObject lay4 = transform.Find("Main_Camera_Primera_Persona/YouWin").gameObject;
+        lay4.SetActive(enable);
     }
 
     private void FixedUpdate() {
@@ -230,7 +259,7 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     void printScreenInfo() {
 
         if (DEBUG_MODE) {
-            UpdateTextMesh("HolaText2",
+            UpdateTextMesh("txtDEBUG",
                 "isMoving: " + playerIsMoving + "\n" + "velocity, x:" + moveVector.x + ", z:" + moveVector.z + "\n" +
                 "Coins: " + GameManager.THIS.playerData.coinsCounter + "\n" +
                 "Keys: " + GameManager.THIS.playerData.keysCounter + "\n" +

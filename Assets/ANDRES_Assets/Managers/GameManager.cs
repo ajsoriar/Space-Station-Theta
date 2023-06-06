@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //SetState(GameStates.MainMenu);
-        SetState(GameStates.Playing);
+        //SetState(GameStates.Playing);
         ResetPlayerData();
     }
 
@@ -45,17 +45,25 @@ public class GameManager : MonoBehaviour
                 SetState(GameStates.Playing);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.J)) {
+            if (gameState == GameStates.Playing) {
+                GameManager.THIS.playerData.health = 0;
+                GameManager.THIS.playerData.oxygen = 0;
+                SetState(GameStates.Die);
+            } 
+        }
     }
 
     public void SetState(GameStates newGameState)
     {
         gameState = newGameState;
         switch (gameState) {
-            case GameStates.None:
-                break;
+            //case GameStates.None:
+            //    break;
 
             case GameStates.WelcomeScreen:
-                //MusicManager.THIS.Play_WelcomeScreenMusic();
+            //    //MusicManager.THIS.Play_WelcomeScreenMusic();
                 break;
 
             case GameStates.MainMenu:
@@ -66,26 +74,41 @@ public class GameManager : MonoBehaviour
             //    break;
 
             case GameStates.Playing:
-
+                AJSR_Player_PrimeraPersona_2.THIS.enablePauseLayer(false);
                 //MusicManager.THIS.Play_GamePlayMusic();
                 Time.timeScale = 1f;
                 break;
 
             case GameStates.GamePaused:
-
+                //MusicManager.THIS.Play_GamePlayMusic();
+                AJSR_Player_PrimeraPersona_2.THIS.enablePauseLayer(true);
                 Time.timeScale = 0f;
+                break;
+
+            case GameStates.Die:
+                //MusicManager.THIS.Play_WelcomeScreenMusic();
+                break;
+
+            case GameStates.Win:
+                //MusicManager.THIS.Play_WelcomeScreenMusic();
                 break;
         }
 
+    }
+
+    public GameStates getGameState() {
+        return gameState;
     }
 }
 
 public enum GameStates
 {
-    None,
+    //None,
     WelcomeScreen,
     MainMenu,
     //Loading,
     Playing,
-    GamePaused
+    GamePaused,
+    Die,
+    Win
 }

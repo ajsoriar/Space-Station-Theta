@@ -120,6 +120,8 @@ public class GunTower_1_v1 : MonoBehaviour
     (float, float) GunToPlayerRaycast() {
         Transform childObjectTransform = transform.Find("Tower/GunHead");
         Transform playerObjectTransform = transform.Find("PlayerCapsule");
+
+        if (childObjectTransform == null || playerObjectTransform == null) return (0, 0);
         Vector3 directionToPlayer = playerObjectTransform.position - childObjectTransform.position;
         //Ray ray = new Ray(childObjectTransform.position, playerObjectTransform.position);
         float angle = 0;

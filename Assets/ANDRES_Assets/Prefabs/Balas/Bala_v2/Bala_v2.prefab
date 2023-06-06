@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2028458295024317114, guid: 13bee74bbdbc95d41a8ae4d5a80e041f, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2028458295024317114, guid: 13bee74bbdbc95d41a8ae4d5a80e041f, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2028458295024317114, guid: 13bee74bbdbc95d41a8ae4d5a80e041f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3a4d056c758e5ef44883f0dbb58f0719, type: 2}
     - target: {fileID: 3135265303585882373, guid: 13bee74bbdbc95d41a8ae4d5a80e041f, type: 3}
       propertyPath: m_RootOrder
       value: 0
