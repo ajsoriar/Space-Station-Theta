@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dorIsOpen: 0
+  onGoingAnimation: 0
 --- !u!1 &5458228602114640121
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +369,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a91897f3d371cda409d535ec61f10061, type: 2}
+  - {fileID: 2100000, guid: abdd56d69bb039d4fbbb1ffc32188669, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -645,7 +646,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 66dd7c2f19c37b14dbf49fdd213164db, type: 2}
+  - {fileID: 2100000, guid: 6f0ec11c2cde6a84eb194f9f81b9f6a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -877,7 +878,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 66dd7c2f19c37b14dbf49fdd213164db, type: 2}
+  - {fileID: 2100000, guid: 6f0ec11c2cde6a84eb194f9f81b9f6a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1057,6 +1058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dorIsOpen: 0
+  onGoingAnimation: 0
 --- !u!1 &9145103220547301435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,7 +1120,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a91897f3d371cda409d535ec61f10061, type: 2}
+  - {fileID: 2100000, guid: abdd56d69bb039d4fbbb1ffc32188669, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

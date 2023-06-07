@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Transactions;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
     public static GameManager THIS;
     public GameStates gameState;
     public PlayerData playerData;
 
-    private void Awake()
-    {
+    private void Awake() {
         if (THIS == null) {// SINGLETON
             THIS = this;
             transform.SetParent(null);
@@ -21,32 +19,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
+    void Start() {
         //SetState(GameStates.MainMenu);
         //SetState(GameStates.Playing);
         ResetPlayerData();
     }
 
-    void ResetPlayerData()
-    {
+    void ResetPlayerData() {
         
     }
 
-    void Update()
-    {
+    void Update() {
         if (Input.GetKeyDown(KeyCode.P)) {
-            if (gameState == GameStates.Playing)
-            {
+            if (gameState == GameStates.Playing) {
                 SetState(GameStates.GamePaused);
-            }
-            else if (gameState == GameStates.GamePaused)
-            {
+            } else if (gameState == GameStates.GamePaused) {
                 SetState(GameStates.Playing);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.J)) {
+        if (Input.GetKeyDown(KeyCode.J)) { // suicide
             if (gameState == GameStates.Playing) {
                 GameManager.THIS.playerData.health = 0;
                 GameManager.THIS.playerData.oxygen = 0;
@@ -55,8 +46,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SetState(GameStates newGameState)
-    {
+    public void SetState(GameStates newGameState) {
         gameState = newGameState;
         switch (gameState) {
             //case GameStates.None:
@@ -67,11 +57,9 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameStates.MainMenu:
+                Time.timeScale = 1f;
                 //MusicManager.THIS.Play_MainMenuMusic();
                 break;
-
-            //case GameStates.Loading:
-            //    break;
 
             case GameStates.Playing:
                 AJSR_Player_PrimeraPersona_2.THIS.enablePauseLayer(false);
@@ -91,6 +79,7 @@ public class GameManager : MonoBehaviour
 
             case GameStates.Win:
                 //MusicManager.THIS.Play_WelcomeScreenMusic();
+                Time.timeScale = 0f;
                 break;
         }
 
@@ -101,8 +90,7 @@ public class GameManager : MonoBehaviour
     }
 }
 
-public enum GameStates
-{
+public enum GameStates {
     //None,
     WelcomeScreen,
     MainMenu,

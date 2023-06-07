@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2484704096432492732}
   m_Layer: 0
   m_Name: Bala_v1
-  m_TagString: Projectile
+  m_TagString: Player_Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

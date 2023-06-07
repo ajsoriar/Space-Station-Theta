@@ -5,6 +5,7 @@ using UnityEngine.ProBuilder;
 public class ObjectExplosion2 : MonoBehaviour {
     public GameObject explosionPrefab;
     public Material blackMaterial;
+    public float SetExplosionForce = 30f;
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.K)) {
@@ -14,7 +15,7 @@ public class ObjectExplosion2 : MonoBehaviour {
     private void OnCollisionEnter(Collision collision) {
         // Check if the collision involves another object
         if (collision.gameObject != null) {
-            if (collision.gameObject.CompareTag("Projectile")) {
+            if (collision.gameObject.CompareTag("Player_Projectile")) {
                 Explode();
             }
         }
@@ -58,7 +59,8 @@ public class ObjectExplosion2 : MonoBehaviour {
 
             // Add a force to the cloned object in a random upward direction
             if (childRigidbody != null) {
-                Vector3 explosionForce = Quaternion.Euler(Random.Range(-30f, 30f), Random.Range(-30f, 30f), Random.Range(-30f, 30f)) * Vector3.up;
+                float lol = SetExplosionForce;
+                Vector3 explosionForce = Quaternion.Euler(Random.Range(-lol, lol), Random.Range(-lol, lol), Random.Range(-lol, lol)) * Vector3.up;
                 childRigidbody.AddForce(explosionForce * 10f, ForceMode.Impulse);
             }
 

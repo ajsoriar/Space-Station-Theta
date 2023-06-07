@@ -10,6 +10,9 @@ TagManager:
   - Enemy
   - RadioactiveArea
   - Projectile
+  - Player_Projectile
+  - Enemy_Projectile
+  - Ground
   layers:
   - Default
   - TransparentFX

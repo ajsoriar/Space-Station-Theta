@@ -17,14 +17,14 @@ public class GunTower_1_v1 : MonoBehaviour
     private float timer = 0f;
     public bool disparando;
     public Rigidbody balaOriginal;
-    Coroutine disparoCoro;
+    Coroutine isShootingNow;
 
     void Start() {
         if (direccionRot != 1f || direccionRot != -1f) direccionRot = -1f;
         if (velocidadRot <= 0f) velocidadRot = 15f;
         playerObjectTransform = GameObject.Find("PlayerCapsule").transform;
         InvokeRepeating("tryToAttackThePlayer", 0f, 1);
-        Empieza_DisparaCoro();
+        Start_Shooting();
     }
 
     void Update()  {
@@ -84,13 +84,13 @@ public class GunTower_1_v1 : MonoBehaviour
 
     void tryToAttackThePlayer() {
         if (status == "PLAYER_DETECTED") {
-            Empieza_DisparaCoro();
+            Start_Shooting();
         } else {
-            //Finaliza_DisparaCoro();
+            //Stop_Shooting();
         }
     }
 
-    IEnumerator DisparaCoro() {
+    IEnumerator DoTheShoot() {
         while (true) {
             Transform childObjectTransform1 = transform.Find("Tower/Gun_1/GunMouth_1");
             Transform childObjectTransform2 = transform.Find("Tower/Gun_2/GunMouth_2");
@@ -104,16 +104,16 @@ public class GunTower_1_v1 : MonoBehaviour
         }
     }
 
-    void Empieza_DisparaCoro() {
-        if (disparoCoro == null) {
-            disparoCoro = StartCoroutine(DisparaCoro());
+    void Start_Shooting() {
+        if (isShootingNow == null) {
+            isShootingNow = StartCoroutine(DoTheShoot());
         }
     }
 
-    void Finaliza_DisparaCoro() {
-        if (disparoCoro != null) {
-            StopCoroutine(disparoCoro);
-            disparoCoro = null;
+    void Stop_Shooting() {
+        if (isShootingNow != null) {
+            StopCoroutine(isShootingNow);
+            isShootingNow = null;
         }
     } 
 

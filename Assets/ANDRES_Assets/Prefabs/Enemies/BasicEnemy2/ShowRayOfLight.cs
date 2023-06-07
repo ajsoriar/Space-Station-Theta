@@ -40,7 +40,11 @@ public class ShowRayOfLight : MonoBehaviour {
                 // damage sound here 
 
             }
-            StartCoroutine(ExecuteAfterDelay(0.6f));
+
+            if (indexChild.activeSelf) {
+                StartCoroutine(ExecuteAfterDelay(0.6f));
+            }
+            
         }
     }
 

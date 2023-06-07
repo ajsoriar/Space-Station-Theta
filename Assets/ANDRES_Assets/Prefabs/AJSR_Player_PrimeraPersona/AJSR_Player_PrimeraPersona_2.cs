@@ -123,17 +123,17 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             if (DEBUG_MODE == false) { DEBUG_MODE = true; } else { DEBUG_MODE = false; };
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Debug.Log("ESC key pressed");
-            RouterManager.THIS.AJSR_Action_Btn_Game_Over_GotoMainMenu();
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape)) {
+        //    Debug.Log("ESC key pressed");
+        //    RouterManager.THIS.AJSR_Action_Btn_Game_Over_GotoMainMenu();
+        //}
 
         if (Input.GetKeyDown(KeyCode.Y)) {
             win();
         }
     }
 
-    void win() {
+    public void win() {
         GameManager.THIS.SetState(GameStates.Win);
         enableWinLayer(true);
     }

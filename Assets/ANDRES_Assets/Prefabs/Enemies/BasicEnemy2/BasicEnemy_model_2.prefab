@@ -798,9 +798,10 @@ GameObject:
   - component: {fileID: 1344509436447247823}
   - component: {fileID: 7216786102622957730}
   - component: {fileID: 1959619254288240096}
+  - component: {fileID: 7213484875724201367}
   m_Layer: 0
   m_Name: Index
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -888,6 +889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 0}
   blackMaterial: {fileID: 0}
+  SetExplosionForce: 30
 --- !u!65 &7216786102622957730
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -917,6 +919,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7213484875724201367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4058506301689259757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06fc090c7ed7e24ea5b3d69bee24e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabToInstantiate: {fileID: 8029941507680827048, guid: 01f686a376cbc3148a8e0ee52b27ce09, type: 3}
 --- !u!1 &4173483625680168928
 GameObject:
   m_ObjectHideFlags: 0
