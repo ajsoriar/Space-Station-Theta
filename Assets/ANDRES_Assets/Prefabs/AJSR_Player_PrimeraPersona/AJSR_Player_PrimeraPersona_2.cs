@@ -1,14 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.UI;
-using UnityEngine.XR;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
-//using AndresHelpers;
 
 public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
 {
@@ -74,14 +66,12 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         rayLength = 100f;
         EnableHand(0);
 
-        //_animator = gameObject.GetComponent<Animator>();
         enableGameOverTextLayer(false);
         enableDieLayer(false);
         enablePauseLayer(false);
         enableWinLayer(false);
     }
 
-    // Update is called once per frame
     void Update() {
 
         if (GameManager.THIS.getGameState() == GameStates.Die || GameManager.THIS.getGameState() == GameStates.Win) { 
@@ -109,12 +99,6 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
             SoundManager.THIS.PlaySound_ShotWeapon();
         }
 
-        // Salto
-        //if (Input.GetKeyDown(KeyCode.Space) && onGround) {
-        //    float jumpForce = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
-        //    rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
-        //}
-
         // Run
         if (Input.GetKeyDown(KeyCode.R)) playerIsRunning = true;
         if (Input.GetKeyUp(KeyCode.R)) playerIsRunning = false;
@@ -122,11 +106,6 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H)) {
             if (DEBUG_MODE == false) { DEBUG_MODE = true; } else { DEBUG_MODE = false; };
         }
-
-        //if (Input.GetKeyDown(KeyCode.Escape)) {
-        //    Debug.Log("ESC key pressed");
-        //    RouterManager.THIS.AJSR_Action_Btn_Game_Over_GotoMainMenu();
-        //}
 
         if (Input.GetKeyDown(KeyCode.Y)) {
             win();
@@ -147,11 +126,12 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         }
     }
 	
-    void die() {
+    public void die() {
         Debug.Log("[RIP] Just Die! ");
         GameManager.THIS.playerData.isDeath = true;
         GameManager.THIS.SetState(GameStates.Die);
-        SoundManager.THIS.PlaySound_OutOfOxygen();
+
+        SoundManager.THIS.PlaySound_GameOver();
 
         enableGameOverTextLayer(true);
 
@@ -297,8 +277,10 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
     void walkSound() {
         if (stepSound == 1){
             SoundManager.THIS.PlaySound_FootRight();
+            stepSound = -1;
         } else { // -1
             SoundManager.THIS.PlaySound_FootLeft();
+            stepSound = 1;
         }
     }
 
@@ -397,14 +379,6 @@ public class AJSR_Player_PrimeraPersona_2 : MonoBehaviour
         }
         hand.transform.position = startPosition;
     }
-
-    //void Disparo()
-    //{
-    //    Transform PlayerGunOriginTransform = transform.Find("Main_Camera_Primera_Persona/PlayerGunOrigin");
-    //    //Rigidbody clonDisparo = Instantiate(balaOriginal, cam.position, cam.rotation);
-    //    Rigidbody clonDisparo = Instantiate(balaOriginal, PlayerGunOriginTransform.position, PlayerGunOriginTransform.rotation);
-    //    clonDisparo.AddForce(clonDisparo.transform.forward * 50f, ForceMode.Impulse);
-    //}
 
     void Disparo()
     {

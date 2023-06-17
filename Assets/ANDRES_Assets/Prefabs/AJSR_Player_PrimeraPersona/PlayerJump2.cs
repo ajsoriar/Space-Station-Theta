@@ -24,6 +24,8 @@ public class PlayerJump2 : MonoBehaviour {
 
         // Set isJumping flag to true
         isJumping = true;
+
+        SoundManager.THIS.PlaySound_Jump();
     }
 
     private void OnCollisionEnter(Collision collision) {

@@ -23,11 +23,13 @@ public class ButtonClick : MonoBehaviour {
 
         // BTN_PLAY
         if (gameButtonAction == "BTN_PLAY") {
+            SoundManager.THIS.PlaySound_MouseClick();
             RouterManager.THIS.AJSR_Action_Btn_Game_Over_PlayItAgainSam();
         }
 
         // BTN_HELP / OPTIONS
         if (gameButtonAction == "BTN_OPTIONS") {
+            SoundManager.THIS.PlaySound_MouseClick();
             MainMenuManager.THIS.DisableObject("1_Main_Menu");
             MainMenuManager.THIS.DisableObject("3_About");
             MainMenuManager.THIS.EnableObject("2_Options");
@@ -35,6 +37,7 @@ public class ButtonClick : MonoBehaviour {
 
         // BTN_ABOUT
         if (gameButtonAction == "BTN_ABOUT") {
+            SoundManager.THIS.PlaySound_MouseClick();
             MainMenuManager.THIS.DisableObject("1_Main_Menu");
             MainMenuManager.THIS.DisableObject("2_Options");
             MainMenuManager.THIS.EnableObject("3_About");
@@ -42,12 +45,14 @@ public class ButtonClick : MonoBehaviour {
 
         // BTN_BACK
         if (gameButtonAction == "BTN_BACK") {
+            SoundManager.THIS.PlaySound_MouseClick();
             MainMenuManager.THIS.DisableObject("2_Options");
             MainMenuManager.THIS.DisableObject("3_About");
             MainMenuManager.THIS.EnableObject("1_Main_Menu");
         }
 
         if (gameButtonAction == "BTN_EXIT_GAME") {
+            SoundManager.THIS.PlaySound_MouseClick();
             Application.Quit();
         }
 
@@ -55,6 +60,7 @@ public class ButtonClick : MonoBehaviour {
 
     private void OnMouseEnter() {
         Debug.Log("[Btn] Mouse entered " + gameObject.name);
+        SoundManager.THIS.PlaySound_MouseHover();
     }
 
     private void OnMouseExit() {

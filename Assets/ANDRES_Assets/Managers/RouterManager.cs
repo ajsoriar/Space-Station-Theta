@@ -50,11 +50,9 @@ public class RouterManager : MonoBehaviour
 
         public void AJSR_Action_GotoScene( int sceneNumber ) {
             if (sceneNumber < 0 || sceneNumber > 5) {
-                // error
-                
+                // error   
             }
-        
-            SceneManager.LoadScene(sceneNumber );
+            SceneManager.LoadScene(sceneNumber);
         }
 
         // GAME OVER

@@ -17,6 +17,7 @@ public class ObjectExplosion2 : MonoBehaviour {
         if (collision.gameObject != null) {
             if (collision.gameObject.CompareTag("Player_Projectile")) {
                 Explode();
+                SoundManager.THIS.PlaySound_Enemy_Dies();
             }
         }
     }

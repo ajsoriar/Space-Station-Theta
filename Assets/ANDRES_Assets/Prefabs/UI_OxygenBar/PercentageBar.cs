@@ -1,12 +1,4 @@
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class PercentageBar : MonoBehaviour
 {  
@@ -31,10 +23,6 @@ public class PercentageBar : MonoBehaviour
         Vector3 scale = objt.transform.localScale;
         UpdateBarLength();
     }
-
-    //private void FixedUpdate() {
-    //    //UpdateBarLength();
-    //}
 
     private void UpdateBarLength() {
         float val = calcScale30fromPercentage(currentOxygenValue);

@@ -44,6 +44,10 @@ public class GameManager : MonoBehaviour {
                 SetState(GameStates.Die);
             } 
         }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            SetState(GameStates.MainMenu);
+            RouterManager.THIS.AJSR_Action_Btn_Game_Over_GotoMainMenu();
+        }
     }
 
     public void SetState(GameStates newGameState) {

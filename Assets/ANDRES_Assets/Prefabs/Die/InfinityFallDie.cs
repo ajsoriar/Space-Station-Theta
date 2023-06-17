@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunTowerBulet_DamagePlayer : MonoBehaviour {
+public class InfinityFallDie : MonoBehaviour
+{
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Player")) {
-            AJSR_Player_PrimeraPersona_2.THIS.decreaseHeath(10);
-            SoundManager.THIS.PlaySound_DamagePlayer();
+            AJSR_Player_PrimeraPersona_2.THIS.die();
         }
     }
 }

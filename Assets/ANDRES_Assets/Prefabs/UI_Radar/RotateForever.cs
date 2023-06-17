@@ -1,6 +1,4 @@
-using System.Collections;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.Port;
 
 public class RotateForever : MonoBehaviour
 {

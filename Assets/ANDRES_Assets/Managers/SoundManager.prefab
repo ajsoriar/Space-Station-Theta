@@ -49,6 +49,15 @@ MonoBehaviour:
   sound_getIitem: {fileID: 8300000, guid: 136ec0f6428fccf4b829777a613aef9a, type: 3}
   sound_getCoin: {fileID: 8300000, guid: 9f3fe8b364a60e04a986e4de0bb8c2a9, type: 3}
   sound_weapon_main: {fileID: 8300000, guid: b4eeec1d2adbe4f4a92f4ff1e03d6b96, type: 3}
+  sound_step_R: {fileID: 8300000, guid: b6ba6d19eada8ee4b9cdb7b267e0cad7, type: 3}
+  sound_step_L: {fileID: 8300000, guid: 9d3a2410ea6214044a5cc8856e56ee6d, type: 3}
+  sound_jump: {fileID: 8300000, guid: 94f9a11763d2967468f668897a80c451, type: 3}
+  sound_enemy_dies: {fileID: 8300000, guid: 54ab12fe14d1e3148b63b4edf33edec8, type: 3}
+  sound_game_over: {fileID: 8300000, guid: d114c9334550d484e9b8e8c0ae2497c2, type: 3}
+  sound_damagePlayer: {fileID: 8300000, guid: 0dfc00d8ea60c1448bdd171f290c892f, type: 3}
+  sound_you_win: {fileID: 8300000, guid: 136ec0f6428fccf4b829777a613aef9a, type: 3}
+  sound_mouse_hover: {fileID: 8300000, guid: f9b29d2d12f7c7448b0ad531a214617e, type: 3}
+  sound_mouse_click: {fileID: 8300000, guid: 9bf020f819d56fc4c991b9be53bf3e71, type: 3}
 --- !u!82 &5596677749395622823
 AudioSource:
   m_ObjectHideFlags: 0
